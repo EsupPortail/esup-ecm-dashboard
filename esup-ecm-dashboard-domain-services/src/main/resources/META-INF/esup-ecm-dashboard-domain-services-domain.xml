@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util" 
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+<!-- in case of use of a database : manage transaction
+	<aop:config>
+		<aop:pointcut id="domainMethods"
+			expression="execution(* org.esupportail.*.domain.DomainServiceImpl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="domainMethods" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+ -->
+
+<!-- in case of use of a database : manage coherence between application and database
+	<aop:config>
+		<aop:pointcut id="txMethods"
+			expression="within(org.esupportail.*.domain.DomainServiceImpl) 
+						&amp;&amp; (execution(* add*(..)) || execution(* delete*(..)) || execution(* update*(..)))
+						&amp;&amp; !execution(* *DatabaseVersion(..))" /> 
+		<aop:aspect id="checkDbVersion" ref="versionningService">
+			<aop:before pointcut-ref="txMethods" method="checkVersion" />
+		</aop:aspect>
+	</aop:config>
+ -->
+
+    <bean id="domainService" class="org.esup.ecm.dashboard.domain.DomainServiceImpl">
+    </bean>
+
+</beans>

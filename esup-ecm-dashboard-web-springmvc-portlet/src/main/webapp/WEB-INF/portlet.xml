@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app
+    xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+    version="1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
+                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+
+    <portlet>
+        <portlet-name>esup-ecm-dashboard</portlet-name>
+        <display-name xml:lang="fr">esup-ecm-dashboard</display-name>
+        <portlet-class>org.esup.ecm.dashboard.web.springmvc.DashboardDispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>classpath:portletContext.xml</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>HELP</portlet-mode>
+            <portlet-mode>ABOUT</portlet-mode>
+        </supports>
+        <supported-locale>fr</supported-locale>
+        <supported-locale>en</supported-locale>
+        <portlet-info>
+            <title>esup-ecm-dashboard</title>
+            <short-title>esup-ecm-dashboard</short-title>
+            <keywords>esup-ecm-dashboard</keywords>
+        </portlet-info>
+
+        <portlet-preferences>
+            <!-- URL d'accès à Nuxeo -->
+            <preference>
+                <name>nuxeoHost</name>
+                <value>${nuxeoHost}</value>
+            </preference>
+            <!-- Secret utiliser par la couche portal-sso de Nuxeo -->
+            <preference>
+                <name>nuxeoPortalAuthSecret</name>
+                <value>${nuxeoPortalAuthSecret}</value>
+            </preference>
+            <!-- Ordre NXQL passé à Nuxeo -->
+            <preference>
+                <name>NXQL</name>
+                <value>${NXQL}</value>
+            </preference>
+            <!-- Nombre maximun d'entrées par par page -->
+            <preference>
+                <name>maxPageSize</name>
+                <value>20</value>
+            </preference>
+            <!-- Liste des colonnes au format JSON -->
+            <preference>
+                <name>columns</name>
+                <value>${columns}</value>
+            </preference>
+        </portlet-preferences>
+
+    </portlet>
+
+</portlet-app>
