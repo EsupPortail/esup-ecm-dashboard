@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -21,6 +22,7 @@ import org.nuxeo.ecm.automation.client.jaxrs.model.FileBlob;
 import org.nuxeo.ecm.automation.client.jaxrs.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,7 @@ public class ViewController extends AbastractExceptionController {
 	@Autowired private NuxeoService nuxeoService;
 	@Autowired private Authenticator authenticator;
 	@Autowired private ViewSelector viewSelector;
+	@Autowired SessionRegistry sessionRegistry;
 	
 	private static final String NUXEO_SECRET = "nuxeoPortalAuthSecret"; 
 	private static final String NUXEO_HOST = "nuxeoHost";
@@ -54,7 +57,7 @@ public class ViewController extends AbastractExceptionController {
     	
     	if(initPreferces != null && initPreferces.equals("yes")){
     		ModelMap model = new ModelMap();
-    		setNuxeoResource(prefs);
+    		setNuxeoResource(request.getPortletSession().getId(), prefs);
         	model.put("docs", nuxeoService.getListByQuery(nuxeoResource, prefs.getValue(NXQL, "")));
         	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
         	model.put("columns", nuxeoResource.getColumns());
@@ -68,7 +71,7 @@ public class ViewController extends AbastractExceptionController {
     public ModelAndView getListByPath(@RequestParam(required=false) String intranetPath, RenderRequest request, RenderResponse response) throws Exception {
     	final PortletPreferences prefs = request.getPreferences();
     	ModelMap model = new ModelMap();
-		setNuxeoResource(prefs);
+		setNuxeoResource(request.getPortletSession().getId(), prefs);
     	model.put("docs", nuxeoService.getListByPath(nuxeoResource, intranetPath));
     	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
     	model.put("columns", nuxeoResource.getColumns());
@@ -77,7 +80,7 @@ public class ViewController extends AbastractExceptionController {
     
     @ResourceMapping
     public void fileDown(ResourceRequest request, ResourceResponse response) throws Exception {
-    	setNuxeoResource(request.getPreferences());
+    	setNuxeoResource(request.getPortletSession().getId(), request.getPreferences());
     	String uid = request.getParameter("uid");
     	FileBlob f = nuxeoService.getFile(nuxeoResource, uid);
     	File file = f.getFile();
@@ -101,7 +104,7 @@ public class ViewController extends AbastractExceptionController {
     }
     
 	@SuppressWarnings("unchecked")
-	private void setNuxeoResource(final PortletPreferences prefs) throws Exception {
+	private void setNuxeoResource(String portletSessionId, final PortletPreferences prefs) throws Exception {
 		// ["dc:title", "dc:modified", "dc:creator", "dc:description"]
 		String columns = "{\"columns\":" + prefs.getValue(NUXEO_COLUMNS, "") + "}";
 
@@ -113,6 +116,7 @@ public class ViewController extends AbastractExceptionController {
 
 		if (nuxeoResource.hasSession())
 			return;
+		
 		String uid;
 		try {
 			uid = authenticator.getUser().getLogin();
@@ -120,7 +124,8 @@ public class ViewController extends AbastractExceptionController {
 			// local test mode with pluto.
 			uid = "Administrator";
 		}
-		String maxPageSize = prefs.getValue(NUXEO_MAX_PAGE_SIZE, "");
 		nuxeoResource.makeSession(uid, prefs.getValue(NUXEO_HOST, ""), prefs.getValue(NUXEO_SECRET, ""));
+		sessionRegistry.registerNewSession(portletSessionId, nuxeoResource);
+		//String maxPageSize = prefs.getValue(NUXEO_MAX_PAGE_SIZE, "");
 	}
 }
