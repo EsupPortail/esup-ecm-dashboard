@@ -13,10 +13,6 @@
             <id>jlehtinen.net</id>
             <url>http://repo.jlehtinen.net/maven2/</url>
         </repository>
-        <repository>
-			<id>nuxeo</id>
-			<url>https://maven.nuxeo.org/nexus/content/repositories/public-releases</url>
-		</repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -170,16 +166,6 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-			<groupId>org.nuxeo.ecm.automation</groupId>
-			<artifactId>nuxeo-automation-client</artifactId>
-			<version>5.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.nuxeo.ecm.core</groupId>
-			<artifactId>nuxeo-core-schema</artifactId>
-			<version>1.6.2</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>

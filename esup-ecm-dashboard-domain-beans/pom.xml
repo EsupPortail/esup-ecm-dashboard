@@ -8,11 +8,31 @@
     </parent>
     <artifactId>esup-ecm-dashboard-domain-beans</artifactId>
     <description>The business object</description>
+    <repositories>
+        <repository>
+            <id>nuxeo</id>
+            <url>https://maven.nuxeo.org/nexus/content/repositories/public-releases</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-commons2-core</artifactId>
             <version>${esupcommons.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.automation</groupId>
+            <artifactId>nuxeo-automation-client</artifactId>
+            <version>5.4.2</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.core</groupId>
+            <artifactId>nuxeo-core-schema</artifactId>
+            <version>1.6.2</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

@@ -8,9 +8,9 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-
-    <import resource="classpath*:META-INF/esup-ecm-dashboard-dao-nuxeo.xml" />
+    
     <context:annotation-config/>
-    <context:component-scan base-package="org.esup.ecm.dashboard.services.nuxeo"/>
-
+    <context:component-scan base-package="org.esup.ecm.dashboard.dao"/>
+    
 </beans>
+

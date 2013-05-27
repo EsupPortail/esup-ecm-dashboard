@@ -16,6 +16,8 @@
     <portlet:param name="action" value="edit" />
 </portlet:actionURL>
 
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js"/>"></script>
+<portlet:renderURL var="homeUrl" portletMode="VIEW"/>
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js"/></script>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
 

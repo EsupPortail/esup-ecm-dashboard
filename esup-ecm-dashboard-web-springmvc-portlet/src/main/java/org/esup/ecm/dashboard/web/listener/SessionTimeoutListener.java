@@ -2,7 +2,7 @@ package org.esup.ecm.dashboard.web.listener;
 
 import javax.servlet.http.HttpSessionEvent;
 
-import org.esup.ecm.dashboard.web.resource.NuxeoResource;
+import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esupportail.commons.context.ApplicationContextHolder;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
@@ -18,13 +18,13 @@ public class SessionTimeoutListener extends HttpSessionEventPublisher{
 	    SessionInformation sessionInfo = (sessionRegistry != null ? 
 	    		sessionRegistry.getSessionInformation(event.getSession().getId()) : null);
 	    
-	    NuxeoResource userSession = null;
+	    NuxeoResource nuxeoResource = null;
 	    if (sessionInfo != null) {
-	    	userSession = (NuxeoResource) sessionInfo.getPrincipal();
+	    	nuxeoResource = (NuxeoResource) sessionInfo.getPrincipal();
 	    }
 	    
-	    if (userSession != null) {
-	    	userSession.expireSession();
+	    if (nuxeoResource != null) {
+	    	nuxeoResource.closeSession();
 	    }
 	    
 	    super.sessionDestroyed(event);
