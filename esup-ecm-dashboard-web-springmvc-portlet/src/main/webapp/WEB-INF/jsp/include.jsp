@@ -7,8 +7,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<%@ taglib prefix="esup" uri="/WEB-INF/esup-ecm-dashboard-taglib.tld" %>
-
 <portlet:defineObjects/>
 <c:set var="n"><portlet:namespace/></c:set>
 

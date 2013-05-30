@@ -6,13 +6,16 @@
 		<legend>Preferences Form</legend>
 		<br/>
 		<label>nuxeoHost</label>
-		<input type="url" name="nuxeoHost" value="${nuxeoHost}" class="span4" required/>
+		<input type="url" name="nuxeoHost" value="${nuxeoHost}" class="input-xxlarge" required/>
+		<p>
+		  <small>cf : http://doc.nuxeo.com/display/NXDOC/NXQL</small>
+		</p>
 		<br/>
 		<label>NXQL</label>
-		<textarea rows="3" name="NXQL"  required>${NXQL}</textarea>
+		<textarea rows="5" name="NXQL" class="input-xxlarge" required>${NXQL}</textarea>
 		<br/>
 		<label>maxPageSize</label>
-		<select id="maxPageSize" name="maxPageSize">
+		<select id="maxPageSize" name="maxPageSize" class="span1">
           	<option>10</option>
           	<option>15</option>
           	<option>20</option>

@@ -10,6 +10,11 @@ import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
 import org.nuxeo.ecm.core.schema.utils.DateParser;
 
+/**
+ * 
+ * @author jiyoung
+ *
+ */
 public class EsupDocument {
 	
 	private final Logger logger = new LoggerImpl(this.getClass());
@@ -92,7 +97,6 @@ public class EsupDocument {
 				logger.error(e.getMessage());
 			} 
 		}
-		
 	}
 
 }

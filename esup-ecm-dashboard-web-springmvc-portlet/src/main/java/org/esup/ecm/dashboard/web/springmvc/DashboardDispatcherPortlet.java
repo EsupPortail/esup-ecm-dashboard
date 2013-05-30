@@ -12,6 +12,14 @@ import org.esupportail.commons.context.ApplicationContextHolder;
 import org.springframework.web.portlet.DispatcherPortlet;
 import org.w3c.dom.Element;
 
+
+/**
+ * Simple extension of <code>org.springframework.web.portlet.DispatcherPortlet</code> witch 
+ * is the entral dispatcher for use within the Portlet MVC framework.
+ * 
+ * @author jiyoung
+ *
+ */
 public class DashboardDispatcherPortlet extends DispatcherPortlet {
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -19,7 +27,7 @@ public class DashboardDispatcherPortlet extends DispatcherPortlet {
 	protected void doHeaders(RenderRequest request, RenderResponse response) {
 		super.doHeaders(request, response);
 		if(request.getPortalContext().getProperty(PortalContext.MARKUP_HEAD_ELEMENT_SUPPORT) != null){
-			//add css en js to portal Header
+			//add css and js files to the portal Header
 			@SuppressWarnings("unchecked")
 			List<HeadElement> headElements = (List<HeadElement>) ApplicationContextHolder.getContext().getBean("headElements");
 			for (HeadElement headElement : headElements) {
