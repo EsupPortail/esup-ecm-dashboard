@@ -11,8 +11,8 @@ import javax.portlet.ResourceResponse;
 
 import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esup.ecm.dashboard.services.nuxeo.NuxeoService;
-import org.nuxeo.ecm.automation.client.jaxrs.model.FileBlob;
 import org.nuxeo.ecm.automation.client.jaxrs.util.IOUtils;
+import org.nuxeo.ecm.automation.client.model.FileBlob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.esup.ecm.dashboard.dao.DaoService;
 import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esup.ecm.dashboard.domain.beans.EsupDocument;
-import org.nuxeo.ecm.automation.client.jaxrs.model.FileBlob;
+import org.nuxeo.ecm.automation.client.model.FileBlob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
