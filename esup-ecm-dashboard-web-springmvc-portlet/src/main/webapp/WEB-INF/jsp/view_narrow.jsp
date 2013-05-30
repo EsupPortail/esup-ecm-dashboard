@@ -25,7 +25,7 @@
 				                        <c:when test="${doc.docMap['type'] == 'File' || doc.docMap['type'] == 'Picture'}">
 				                            <a href="<portlet:resourceURL >
 				                                    <portlet:param name="action" value="file" />
-				                                    <portlet:param name="uid" value="${doc.docMap['id']}" />
+				                                    <portlet:param name="fid" value="${doc.docMap['id']}" />
 				                                </portlet:resourceURL>">${doc.docMap['title']}</a>
 				                        </c:when>
 				                        <c:otherwise>
