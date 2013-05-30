@@ -40,13 +40,7 @@
                         <url>/pluto/pluto.css</url>
                         <url>/pluto/portlet-spec-1.0.css</url>
                         <url>/pluto/portlet-spec-2.0.css</url>
-                       <!--  <url>/esup-portlet-intranet-web-springmvc-portlet/css/bootstrap.css</url>  -->
                     </cssUrls>
-<!--                     <jsUrls>
- 					  <url>/esup-portlet-intranet-web-springmvc-portlet/js/jquery-1.9.1.min.js</url>
-					  <url>/esup-portlet-intranet-web-springmvc-portlet/js/bootstrap.min.js</url> 
-					</jsUrls> -->
-                    
                     <portletXml>${basedir}/src/main/webapp/WEB-INF/portlet.xml</portletXml>
                     <connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
@@ -125,12 +119,6 @@
             <version>2.3</version>
             <type>jar</type>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>junit</groupId>
-        	<artifactId>junit</artifactId>
-        	<version>4.11</version>
-        	<scope>test</scope>
         </dependency>
         <!-- the other slf4j jars -->
         <!-- using log4j as backend -->
