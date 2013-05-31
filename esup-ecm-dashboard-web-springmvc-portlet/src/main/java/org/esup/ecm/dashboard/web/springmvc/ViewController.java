@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -13,6 +14,7 @@ import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esup.ecm.dashboard.services.nuxeo.NuxeoService;
 import org.nuxeo.ecm.automation.client.jaxrs.util.IOUtils;
 import org.nuxeo.ecm.automation.client.model.FileBlob;
+import org.nuxeo.ecm.automation.client.model.PaginableDocuments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -47,16 +49,29 @@ public class ViewController extends AbastractBaseController {
 	 * @throws Exception
 	 */
     @RenderMapping
-    public ModelAndView welcome(RenderRequest request, RenderResponse response) throws Exception {
+    public ModelAndView welcome(@RequestParam(required=false, defaultValue="0") int pageIndex, RenderRequest request, RenderResponse response) throws Exception {
     	NuxeoResource nuxeoResource = buildNuxeoSession(request);
     	
     	if(!nuxeoResource.hasSession()){
     		return new ModelAndView(viewSelector.getViewName(request, "init"), null);
     	}else{
     		ModelMap model = new ModelMap();
-        	model.put("docs", nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, "")));
+    		
+    		PortletPreferences prefs = request.getPreferences();
+        	int pageSize = new Integer(prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
+        	
+        	
+    		PaginableDocuments docs = nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, ""), pageIndex, pageSize);
+        	model.put("docs", docs.list());
         	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
         	model.put("columns", nuxeoResource.getColumns());
+        	
+        	
+        	model.put("totalSize", docs.getTotalSize());
+        	model.put("pageIndex", docs.getPageIndex());
+        	model.put("inputRef", docs.getInputRef());
+        	model.put("pageCount", docs.getPageCount());
+        	model.put("pageSize", docs.getPageSize());
         	
             return new ModelAndView(viewSelector.getViewName(request, "view"), model);
     	}
@@ -76,7 +91,11 @@ public class ViewController extends AbastractBaseController {
     public ModelAndView getListByPath(@RequestParam(required=false) String intranetPath, RenderRequest request, RenderResponse response) throws Exception {
     	ModelMap model = new ModelMap();
     	NuxeoResource nuxeoResource = buildNuxeoSession(request);
-    	model.put("docs", nuxeoService.getListByPath(nuxeoResource, intranetPath));
+    	
+    	PortletPreferences prefs = request.getPreferences();
+    	int pageSize = new Integer(prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
+    	
+    	model.put("docs", nuxeoService.getListByPath(nuxeoResource, intranetPath, 0, pageSize).list());
     	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
     	model.put("columns", nuxeoResource.getColumns());
         return new ModelAndView(viewSelector.getViewName(request, "view"), model);
