@@ -16,6 +16,10 @@
 				<c:choose>
 				<c:when test="${pageIndex != i}">
 					<li><a href="<portlet:renderURL>
+							<c:if test="${not empty action}">
+							<portlet:param name="action" value="list" />
+							</c:if>
+							<portlet:param name="intranetPath" value="${intranetPath}" />
                             <portlet:param name="pageIndex" value="${i}" />
                         </portlet:renderURL>">${i+1}</a></li>
 				</c:when>

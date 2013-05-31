@@ -72,6 +72,8 @@ public class ViewController extends AbastractBaseController {
         	model.put("pageCount", docs.getPageCount());
         	model.put("pageSize", docs.getPageSize());
         	
+        	
+        	
             return new ModelAndView(viewSelector.getViewName(request, "view"), model);
     	}
     }
@@ -79,6 +81,7 @@ public class ViewController extends AbastractBaseController {
     /**
      * 
      * Retrieve Nuxeo document list by folder path
+     * we do not use this method now
      * 
      * @param intranetPath
      * @param request
@@ -93,7 +96,7 @@ public class ViewController extends AbastractBaseController {
     	
     	PortletPreferences prefs = request.getPreferences();
     	int pageSize = new Integer(prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
-    	PaginableDocuments docs = nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, ""), pageIndex, pageSize);
+    	PaginableDocuments docs = nuxeoService.getListByPath(nuxeoResource, intranetPath, pageIndex, pageSize);
     	
     	model.put("docs", docs.list());
     	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
@@ -103,11 +106,13 @@ public class ViewController extends AbastractBaseController {
     	model.put("inputRef", docs.getInputRef());
     	model.put("pageCount", docs.getPageCount());
     	model.put("pageSize", docs.getPageSize());
+    	
         return new ModelAndView(viewSelector.getViewName(request, "view"), model);
     }
     
     /**
      * File Download
+     * we do not use this method now
      * 
      * @param request
      * @param response
@@ -126,6 +131,7 @@ public class ViewController extends AbastractBaseController {
     	
     	OutputStream outStream = response.getPortletOutputStream();
 		if (!file.exists() || !file.canRead()) {
+			
 			outStream.write("<i>Unable to find the specified file</i>".getBytes());
 		} else {
 			FileInputStream inStream = new FileInputStream(file);
