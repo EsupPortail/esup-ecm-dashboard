@@ -66,7 +66,6 @@ public class ViewController extends AbastractBaseController {
         	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
         	model.put("columns", nuxeoResource.getColumns());
         	
-        	
         	model.put("totalSize", docs.getTotalSize());
         	model.put("pageIndex", docs.getPageIndex());
         	model.put("inputRef", docs.getInputRef());
@@ -88,16 +87,22 @@ public class ViewController extends AbastractBaseController {
      * @throws Exception
      */
     @RenderMapping(params="action=list")
-    public ModelAndView getListByPath(@RequestParam(required=false) String intranetPath, RenderRequest request, RenderResponse response) throws Exception {
+    public ModelAndView getListByPath(@RequestParam(required=false, defaultValue="0") int pageIndex, @RequestParam(required=false) String intranetPath, RenderRequest request, RenderResponse response) throws Exception {
     	ModelMap model = new ModelMap();
     	NuxeoResource nuxeoResource = buildNuxeoSession(request);
     	
     	PortletPreferences prefs = request.getPreferences();
     	int pageSize = new Integer(prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
+    	PaginableDocuments docs = nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, ""), pageIndex, pageSize);
     	
-    	model.put("docs", nuxeoService.getListByPath(nuxeoResource, intranetPath, 0, pageSize).list());
+    	model.put("docs", docs.list());
     	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
     	model.put("columns", nuxeoResource.getColumns());
+    	model.put("totalSize", docs.getTotalSize());
+    	model.put("pageIndex", docs.getPageIndex());
+    	model.put("inputRef", docs.getInputRef());
+    	model.put("pageCount", docs.getPageCount());
+    	model.put("pageSize", docs.getPageSize());
         return new ModelAndView(viewSelector.getViewName(request, "view"), model);
     }
     

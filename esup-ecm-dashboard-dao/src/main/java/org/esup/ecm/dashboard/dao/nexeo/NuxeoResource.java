@@ -10,7 +10,6 @@ public class NuxeoResource {
 	private Session session;
 	private boolean hasSession = false;
 	private ArrayList<String> columns;
-	
 	public Session getSession() {
 		if(session == null)
 			throw new IllegalAccessError("No session available.");

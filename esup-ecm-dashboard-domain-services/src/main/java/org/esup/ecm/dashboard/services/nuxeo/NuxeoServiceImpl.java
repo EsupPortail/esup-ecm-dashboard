@@ -14,7 +14,6 @@ public class NuxeoServiceImpl implements NuxeoService{
 	public PaginableDocuments getListByPath(NuxeoResource nuxeoResource, String intranetPath, int page, int pageSize) throws Exception{
 		return daoService.getListByPath(nuxeoResource, intranetPath, page, pageSize);
 	}
-	
 	public PaginableDocuments getListByQuery(NuxeoResource nuxeoResource, String query, int page, int pageSize) throws Exception{
 		return daoService.getListByQuery(nuxeoResource, query, page, pageSize);
 	}

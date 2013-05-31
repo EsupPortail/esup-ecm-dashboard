@@ -11,7 +11,6 @@ import org.nuxeo.ecm.automation.client.model.PropertyMap;
 import org.springframework.stereotype.Service;
 @Service
 public class NuxeoDaoServiceImpl implements DaoService{
-
 	private String defaultCondition = "AND (ecm:mixinType != 'HiddenInNavigation') AND (ecm:currentLifeCycleState != 'deleted')";
 	
 	public PaginableDocuments getListByPath(NuxeoResource nuxeoResource, String intranetPath, int page, int pageSize) throws Exception{
