@@ -32,3 +32,10 @@
     	<td colspan="5"><%@ include file="/WEB-INF/jsp/pagination.jsp"%></td>
 	</tr>
 </table>
+<script>
+	function open_in_new_tab(id) {
+		var url = "${nuxeoHost}/nxdoc/default/" + id + "/view_documents";
+		var win = window.open(url, '_blank');
+		win.focus(); 
+	}
+</script>

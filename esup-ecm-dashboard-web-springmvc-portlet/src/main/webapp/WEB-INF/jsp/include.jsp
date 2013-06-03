@@ -20,11 +20,3 @@
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.9.1.min.js"/></script>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css" />
-
-<script>
-	function open_in_new_tab(id) {
-		var url = "${nuxeoHost}/nxdoc/default/" + id + "/view_documents";
-		var win = window.open(url, '_blank');
-		win.focus(); 
-	}
-</script>

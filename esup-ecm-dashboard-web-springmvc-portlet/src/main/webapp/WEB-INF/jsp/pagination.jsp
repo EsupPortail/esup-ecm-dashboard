@@ -1,5 +1,5 @@
 <p class="text-center">
-	<div class="pagination pagination-mini pagination-centered">
+	<div class="pagination pagination-centered">
 		<ul>
 			<c:choose>
 				<c:when test="${pageIndex > 0}">

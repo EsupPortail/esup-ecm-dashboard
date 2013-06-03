@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/jsp/include.jsp"%>
+<%@ include file="/WEB-INF/jsp/mobile_header.jsp"%>
 <table class="table table-striped table-hover table-condensed">
     <tr>
     	<th></th>
@@ -16,7 +16,7 @@
 	            	
 	            		<c:choose>
 	                        <c:when test="${column == 'title'}">
-	                        	<td><a href="javascript:open_in_new_tab('${doc.id}')">${doc.title}</a></td>
+	                        	<td><a href="${nuxeoHost}/nxdoc/default/${doc.id}/view_documents" rel="external">${doc.title}</a></td>
 	                        </c:when>
 	                        <c:otherwise>
 	                        	<td>${esup:getDublinCoreProperty(doc.properties, column)}</td>
@@ -32,3 +32,4 @@
     	<td colspan="5"><%@ include file="/WEB-INF/jsp/pagination.jsp"%></td>
 	</tr>
 </table>
+<%@ include file="/WEB-INF/jsp/mobile_footer.jsp"%>
