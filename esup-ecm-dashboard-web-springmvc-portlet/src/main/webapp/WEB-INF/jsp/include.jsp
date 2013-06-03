@@ -23,7 +23,7 @@
 
 <script>
 	function open_in_new_tab(id) {
-		var url = "http://enor.univ-rennes1.fr:8080/nuxeo/nxdoc/default/" + id + "/view_documents";
+		var url = "${nuxeoHost}/nxdoc/default/" + id + "/view_documents";
 		var win = window.open(url, '_blank');
 		win.focus(); 
 	}
