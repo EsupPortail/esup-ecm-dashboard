@@ -72,6 +72,8 @@ public class ViewController extends AbastractBaseController {
         	model.put("pageCount", docs.getPageCount());
         	model.put("pageSize", docs.getPageSize());
         	
+        	model.put(NUXEO_HOST, prefs.getValue(NUXEO_HOST, ""));
+        	
         	
         	
             return new ModelAndView(viewSelector.getViewName(request, "view"), model);
