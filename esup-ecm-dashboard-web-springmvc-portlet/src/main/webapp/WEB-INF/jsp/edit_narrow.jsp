@@ -1,18 +1,21 @@
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
-
 <form name="editForm" method="post" action="${editPreperencesUrl}" >
 
-	<fieldset>
-		<legend>Preferences Form</legend>
-		<br/>
-		<label>nuxeoHost</label>
-		<input type="url" name="nuxeoHost" value="${nuxeoHost}" class="input-xxlarge" required/>
-		<br/>
-		<label>NXQL</label>
-		<textarea rows="5" name="NXQL" class="input-xxlarge" required>${NXQL}</textarea>
-		<br/>
-		<label>maxPageSize</label>
-		<select id="maxPageSize" name="maxPageSize" class="span1">
+	<table style="width: 100%">
+	  <tr>
+	    <th colspan="2"><legend>Preferences Form</legend></th>
+	  </tr>
+	  <tr>
+	    <td><label>nuxeoHost</label></td>
+	    <td><input type="url" name="nuxeoHost" value="${nuxeoHost}" class="input-xxlarge" required/></td>
+	  </tr>
+	  <tr>
+	    <td><label>NXQL</label></td>
+	    <td><textarea rows="5" name="NXQL" class="input-xxlarge" required>${NXQL}</textarea></td>
+	  </tr>
+	  <tr>
+	    <td><label>Max Page Size</label></td>
+	    <td><select id="maxPageSize" name="maxPageSize" class="span1">
 			<option>1</option>
 			<option>2</option>
 			<option>5</option>
@@ -21,18 +24,19 @@
           	<option>20</option>
           	<option>25</option>
           	<option>30</option>
-      	</select>
-		<br/>
-		<label>columns</label>
-		<input type="text" name="columns" value='${columns}' class="input-xxlarge"  required/>
-		<br/>
-		
-	</fieldset>
-	<center><div class="form-actions"><button type="submit" class="btn btn-small btn-success" >Summit</button></div>	</center>
-
+      	</select></td>
+	  </tr>
+	  <tr>
+	    <td><label>columns</label></td>
+	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge"  required/></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2"><center><button type="submit" class="btn btn-small btn-success" >Summit</button></center></td>
+	  </tr>
+	</table>
 </form>
 
 <script>
     var val = '${maxPageSize}';
-    $('#maxPageSize option:contains(' + val + ')').prop({selected: true});
+    $("#maxPageSize").val(val);
 </script>
