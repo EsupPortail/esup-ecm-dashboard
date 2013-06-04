@@ -1,8 +1,5 @@
 package org.esup.ecm.dashboard.web.springmvc;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
@@ -10,8 +7,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.esup.ecm.dashboard.services.nuxeo.NuxeoService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -30,7 +25,6 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @Controller
 @RequestMapping(value = "EDIT")
 public class EditController extends AbastractBaseController{
-	
 	/**
 	 * 
 	 * Initialize the Preferences for ᅟthe Form UI
@@ -81,15 +75,7 @@ public class EditController extends AbastractBaseController{
 		prefs.setValue("initPreferences", "yes");
 		
 		prefs.store();
-		// set columns from preferences.
-		// Format : JSON
-		String columns = "{\"columns\":" + prefs.getValue(NUXEO_COLUMNS, "") + "}";
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> userInMap = mapper.readValue(columns, new TypeReference<Map<String, Object>>() {});
-		@SuppressWarnings("unchecked")
-		ArrayList<String> cols = (ArrayList<String>) userInMap.get("columns");
-		buildNuxeoSession(request).setColumns(cols);
-		
+		buildNuxeoSession(request).setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
 		response.setPortletMode(PortletMode.VIEW);
 	}
     

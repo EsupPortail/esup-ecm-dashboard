@@ -77,6 +77,7 @@ public abstract class AbastractBaseController {
 		if(nuxeoResource == null){
 			nuxeoResource = new NuxeoResource();
 			request.getPortletSession().setAttribute("nuxeoResource", nuxeoResource);
+			nuxeoResource.setColumns(request.getPreferences().getValue(NUXEO_COLUMNS, ""));
 		}
 		if(nuxeoResource.hasSession())
 			return nuxeoResource;
