@@ -57,5 +57,8 @@
         </portlet-preferences>
 
     </portlet>
+    <user-attribute>
+        <name>uid</name>
+    </user-attribute>
 
 </portlet-app>
