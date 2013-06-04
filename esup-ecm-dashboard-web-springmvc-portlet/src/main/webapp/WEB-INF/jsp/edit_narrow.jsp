@@ -16,8 +16,6 @@
 	  <tr>
 	    <td><label>Max Page Size</label></td>
 	    <td><select id="maxPageSize" name="maxPageSize" class="span1">
-			<option>1</option>
-			<option>2</option>
 			<option>5</option>
           	<option>10</option>
           	<option>15</option>
@@ -28,7 +26,7 @@
 	  </tr>
 	  <tr>
 	    <td><label>columns</label></td>
-	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge"  required/></td>
+	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge" style="width: 533px" required/></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2"><center><button type="submit" class="btn btn-small btn-success" >Summit</button></center></td>
