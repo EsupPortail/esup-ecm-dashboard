@@ -38,6 +38,9 @@
             <url>https://mvn.esup-portail.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+    <scm>
+        <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-ecm-dashboard</developerConnection>
+    </scm>
     <build>
         <defaultGoal>install</defaultGoal>
         <plugins>
