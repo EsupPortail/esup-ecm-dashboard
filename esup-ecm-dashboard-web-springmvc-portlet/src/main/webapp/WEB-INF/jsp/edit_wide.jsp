@@ -29,7 +29,7 @@
 	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge"  required style="width: 533px"/></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><center><button type="submit" class="btn btn-small btn-success" >Summit</button></center></td>
+	    <td colspan="2"><center><button type="submit" class="btn btn-small btn-success" >Submit</button></center></td>
 	  </tr>
 	</table>
 </form>
