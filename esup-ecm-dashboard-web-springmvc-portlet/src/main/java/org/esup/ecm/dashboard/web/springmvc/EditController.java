@@ -7,6 +7,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esup.ecm.dashboard.services.nuxeo.NuxeoService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -64,18 +65,22 @@ public class EditController extends AbastractBaseController{
      */
     @ActionMapping(params="action=edit")
 	public void editPreferences(ActionRequest request, ActionResponse response) throws Exception {
+    	
 		PortletPreferences prefs = request.getPreferences();
+		
+		NuxeoResource nuxeoResource = getNuxeoResource(request);
 		if(!prefs.isReadOnly(NUXEO_HOST)){
 			prefs.setValue(NUXEO_HOST, request.getParameter(NUXEO_HOST));
+			prefs.store();
+			makeNuxeoSession(request, nuxeoResource);
     	}
 		
 		prefs.setValue(NXQL, request.getParameter(NXQL));
 		prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE));
 		prefs.setValue(NUXEO_COLUMNS, request.getParameter(NUXEO_COLUMNS));
-		prefs.setValue("initPreferences", "yes");
-		
 		prefs.store();
-		buildNuxeoSession(request).setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
+		
+		makeColumns(request, nuxeoResource);
 		response.setPortletMode(PortletMode.VIEW);
 	}
     
