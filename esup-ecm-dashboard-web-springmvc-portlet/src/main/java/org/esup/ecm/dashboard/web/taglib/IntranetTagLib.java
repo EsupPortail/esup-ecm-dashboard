@@ -29,7 +29,10 @@ public class IntranetTagLib {
 			Date d = DateParser.parseDate(map.getString("dc:"+name));
 			return sdf.format(d);
 		}
+		String rtnValue = map.getString("dc:"+name);
+		if(rtnValue == null || rtnValue.equals("null"))
+			return "";
 		
-		return map.getString("dc:"+name);
+		return rtnValue;
 	}
 }
