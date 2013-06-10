@@ -9,7 +9,7 @@
 <div class="portlet-section">
 
 	<span class="exceptionMessage">
-		<spring:message code="${exceptionMessage}"/>
+		${exceptionMessage}
 	</span>
 
     <a href="#" id="exception-details-link">
