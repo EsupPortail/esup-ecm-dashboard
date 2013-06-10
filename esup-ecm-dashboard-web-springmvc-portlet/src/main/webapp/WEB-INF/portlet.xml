@@ -32,12 +32,13 @@
             <!-- URL d'accès à Nuxeo -->
             <preference>
                 <name>nuxeoHost</name>
-                <value>${nuxeoHost}</value>
+                <value></value>
             </preference>
             <!-- Secret utiliser par la couche portal-sso de Nuxeo -->
             <preference>
                 <name>nuxeoPortalAuthSecret</name>
                 <value>secret</value>
+                <read-only>true</read-only>
             </preference>
             <!-- Ordre NXQL passé à Nuxeo -->
             <preference>
