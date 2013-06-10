@@ -1,11 +1,14 @@
 package org.esup.ecm.dashboard.web.springmvc;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.esup.ecm.dashboard.dao.nexeo.NuxeoResource;
 import org.esup.ecm.dashboard.services.auth.Authenticator;
 import org.esup.ecm.dashboard.services.nuxeo.NuxeoService;
@@ -21,9 +24,7 @@ import org.springframework.web.portlet.ModelAndView;
  * @author jpark
  */
 public abstract class AbastractBaseController {
-	
 	private final Logger logger = new LoggerImpl(this.getClass());
-	
 	/**
 	 * Nuxeo server's address to use when {@link NuxeoResource}'s makeSession method is called.
 	 */
@@ -37,6 +38,10 @@ public abstract class AbastractBaseController {
 	 * The list of Nuxeo Nocumnet's columns which will be stored in the Preferences of portlet.<br>
 	 */
 	protected static final String NUXEO_COLUMNS = "columns";
+	
+	
+	protected static final String PREFERNCES_UPDATED = "isPreferencesUpdated";
+	
 	/**
 	 * Password to used by Nuxeo's portal-sso
 	 */
@@ -64,26 +69,31 @@ public abstract class AbastractBaseController {
         return new ModelAndView("exception", model);
 	}
 	
-	
-    /**
-     * Creates the NuxeoResource in the PortletSession
-     * 
-     * @see org.esup.ecm.dashboard.web.listener.SessionTimeoutListener#sessionDestroyed() 
-     * 
-     * @param request PortletRequest
-     */
-	protected NuxeoResource buildNuxeoSession(PortletRequest request) throws Exception{
+	protected NuxeoResource getNuxeoResource(PortletRequest request){
+		//request.getPortletSession().setAttribute("nuxeoResource", null);
 		NuxeoResource nuxeoResource = (NuxeoResource) request.getPortletSession().getAttribute("nuxeoResource");
 		if(nuxeoResource == null){
 			nuxeoResource = new NuxeoResource();
 			request.getPortletSession().setAttribute("nuxeoResource", nuxeoResource);
-			nuxeoResource.setColumns(request.getPreferences().getValue(NUXEO_COLUMNS, ""));
+			sessionRegistry.registerNewSession(request.getPortletSession().getId(), nuxeoResource);
 		}
-		if(nuxeoResource.hasSession())
-			return nuxeoResource;
-		
+		return nuxeoResource;
+	}
+	
+	
+    protected void makeColumns(PortletRequest request,NuxeoResource nuxeoResource) throws JsonParseException, JsonMappingException, IOException{
+    	PortletPreferences prefs = request.getPreferences();
+    	if(prefs.getValue(NUXEO_COLUMNS, "").contains("[") && prefs.getValue(NUXEO_COLUMNS, "").contains("]")){
+			nuxeoResource.setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
+		}
+    }
+
+	
+	protected void makeNuxeoSession(PortletRequest request,NuxeoResource nuxeoResource) throws Exception{
 		PortletPreferences prefs = request.getPreferences();
-		if(prefs.getValue("initPreferences", "").equals("yes") && !nuxeoResource.hasSession()){
+		if(prefs.getValue(NUXEO_HOST, "").contains("http://")){
+			String nuxeoHost = prefs.getValue(NUXEO_HOST, "");
+			String nuxeoSecret = prefs.getValue(NUXEO_SECRET, "");
 			String uid;
 			try {
 				uid = authenticator.getUser().getLogin();
@@ -91,9 +101,8 @@ public abstract class AbastractBaseController {
 				// local test mode with pluto plugin.
 				uid = "Administrator";
 			}
-			nuxeoResource.makeSession(uid, prefs.getValue(NUXEO_HOST, ""), prefs.getValue(NUXEO_SECRET, ""));
-			sessionRegistry.registerNewSession(request.getPortletSession().getId(), nuxeoResource);
+			nuxeoResource.makeSession(nuxeoHost, uid, nuxeoSecret);
 		}
-		return nuxeoResource;
 	}
+	
 }
