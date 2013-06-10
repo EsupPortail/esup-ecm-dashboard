@@ -11,7 +11,10 @@
 	  </tr>
 	  <tr>
 	    <td><label>NXQL</label></td>
-	    <td><textarea rows="5" name="NXQL" class="input-xxlarge" required>${NXQL}</textarea></td>
+	    <td><textarea rows="5" name="NXQL" class="input-xxlarge" required>${NXQL}</textarea>
+        <p class="text-info"><small>ex:) SELECT * FROM Document WHERE ecm:path STARTSWITH '/default-domain/workspaces/' ORDER BY dc:modified DESC</small></p>
+	    
+	    </td>
 	  </tr>
 	  <tr>
 	    <td><label>Max Page Size</label></td>
@@ -26,7 +29,9 @@
 	  </tr>
 	  <tr>
 	    <td><label>columns</label></td>
-	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge" style="width: 533px" required/></td>
+	    <td><input type="text" name="columns" value='${columns}' class="input-xxlarge" style="width: 533px" required/>
+	    	<p class="text-info"><small>ex:)["dc:title", "dc:modified", "dc:creator", "dc:description"]</small></p>
+		</td>
 	  </tr>
 	  <tr>
 	    <td colspan="2"><center><button type="submit" class="btn btn-small btn-success" >Submit</button></center></td>
