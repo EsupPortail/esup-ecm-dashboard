@@ -14,6 +14,7 @@ import org.nuxeo.ecm.automation.client.jaxrs.spi.auth.PortalSSOAuthInterceptor;
 
 public class NuxeoResource {
 	private Session session;
+
 	private ArrayList<String> columns;
 	public Session getSession() {
 		if(session == null)
@@ -25,12 +26,13 @@ public class NuxeoResource {
 		return (session != null);
 	}
 
-	public void makeSession(String uid, String nuxeoHost, String nuxeoPortalAuthSecret) throws Exception{
-		if(session == null){
-			HttpAutomationClient client = new HttpAutomationClient(nuxeoHost + "/site/automation");
-			client.setRequestInterceptor(new PortalSSOAuthInterceptor(nuxeoPortalAuthSecret, uid));
-			this.session = client.getSession();
+	public void makeSession(String nuxeoHost, String ssoUserId, String ssoUserPw) throws Exception{
+		if(session != null){
+			closeSession();
 		}
+		HttpAutomationClient client = new HttpAutomationClient(nuxeoHost + "/site/automation");
+		client.setRequestInterceptor(new PortalSSOAuthInterceptor(ssoUserPw, ssoUserId));
+		this.session = client.getSession();
 	}
 	
 	public void setColumns(String colsStr) throws JsonParseException, JsonMappingException, IOException{
