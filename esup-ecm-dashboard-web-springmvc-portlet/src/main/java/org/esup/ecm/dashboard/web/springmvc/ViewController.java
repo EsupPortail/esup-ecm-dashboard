@@ -29,7 +29,6 @@ public class ViewController extends AbastractBaseController {
 	
 	@Autowired private NuxeoService nuxeoService;
 	@Autowired private ViewSelector viewSelector;
-    
 	/**
 	 * First access point<br>
 	 * If no Preferences information are found, send the response to init.jsp.<br>
@@ -48,7 +47,7 @@ public class ViewController extends AbastractBaseController {
     	if(!preferencesFlag){
     		return new ModelAndView(viewSelector.getViewName(request, "init"), null);
     	}else{
-    		NuxeoResource nuxeoResource = getNuxeoResource(request);
+    		NuxeoResource nuxeoResource = getNuxeoResourceFromPortletSession(request);
     		if(!nuxeoResource.hasSession()){
     			makeNuxeoSession(request,nuxeoResource);
     			makeColumns(request, nuxeoResource);
@@ -56,7 +55,15 @@ public class ViewController extends AbastractBaseController {
     		
     		ModelMap model = new ModelMap();
         	int pageSize = new Integer(prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
-    		PaginableDocuments docs = nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, ""), pageIndex, pageSize);
+        	
+        	PaginableDocuments docs = null;
+        	docs = nuxeoService.getListByQuery(nuxeoResource, request.getPreferences().getValue(NXQL, ""), pageIndex, pageSize);
+        	
+        	if(docs.getPageCount() == 0){
+        		String message = messageSource.getMessage("nuxeo.fail.execution.query", null, "", request.getLocale());
+        		throw new Exception(message);
+        	}
+        	
         	model.put("docs", docs.list());
         	model.put("isuPortal", request.getPortalContext().getPortalInfo().contains("uPortal"));
         	model.put("columns", nuxeoResource.getColumns());
