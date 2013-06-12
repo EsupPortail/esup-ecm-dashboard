@@ -12,6 +12,7 @@
 				</c:otherwise>
 			</c:choose>
 			
+			<c:if test="${pageCount > 0}">
 			<c:forEach begin="0" end="${pageCount-1}" var="i">
 				<c:choose>
 				<c:when test="${pageIndex != i}">
@@ -28,6 +29,7 @@
 				</c:otherwise>
 				</c:choose>
 			</c:forEach>
+			</c:if>
 			
 			<c:choose>
 				<c:when test="${pageIndex+1 < pageCount}">
