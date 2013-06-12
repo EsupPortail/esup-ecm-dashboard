@@ -4,7 +4,7 @@
     <parent>
         <artifactId>esup-ecm-dashboard</artifactId>
         <groupId>org.esupportail</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>esup-ecm-dashboard-utils</artifactId>
     <description>couche utilitaire</description>
