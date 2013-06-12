@@ -26,6 +26,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @Controller
 @RequestMapping(value = "EDIT")
 public class EditController extends AbastractBaseController{
+	
 	/**
 	 * 
 	 * Initialize the Preferences for ᅟthe Form UI
@@ -68,7 +69,7 @@ public class EditController extends AbastractBaseController{
     	
 		PortletPreferences prefs = request.getPreferences();
 		
-		NuxeoResource nuxeoResource = getNuxeoResource(request);
+		NuxeoResource nuxeoResource = getNuxeoResourceFromPortletSession(request);
 		if(!prefs.isReadOnly(NUXEO_HOST)){
 			prefs.setValue(NUXEO_HOST, request.getParameter(NUXEO_HOST));
 			prefs.store();
