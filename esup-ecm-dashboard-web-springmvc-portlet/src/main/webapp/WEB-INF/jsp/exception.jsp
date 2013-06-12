@@ -7,17 +7,14 @@
 </div>
 
 <div class="portlet-section">
-
+    <p class="text-error">
+        <spring:message code="exception.contact.admin"/>
+    </p>  
 	<span class="exceptionMessage">
-		${exceptionMessage}
+		<spring:message code="exception.details"/> : ${exceptionMessage}
 	</span>
-
-    <a href="#" id="exception-details-link">
-    	<spring:message code="exception.details"/>
-    </a>
-	<div class="exception-details">
-		<pre>${exceptionStackTrace}</pre>
-	</div>
-
+<%--     <p class="text-error">
+        <a href="${editPreferencesUrl}"><spring:message code="preferences.form.page"/></a>
+    </p> --%>           
 </div>
 
