@@ -40,14 +40,27 @@ public class EditController extends AbastractBaseController{
     public ModelAndView editPreferences(RenderRequest request, RenderResponse response) throws Exception {
     	ModelMap model = new ModelMap();
     	PortletPreferences prefs = request.getPreferences();
-    	if(!prefs.isReadOnly(NUXEO_HOST)){
-    		model.put(NUXEO_HOST,prefs.getValue(NUXEO_HOST, null));
-    	}
+    	
+		model.put(NUXEO_HOST + "_readOnly", isDisabledFiled(prefs.isReadOnly(NUXEO_HOST)));
+		model.put(NUXEO_HOST,prefs.getValue(NUXEO_HOST, null));
+		
+		model.put(NXQL + "_readOnly", isDisabledFiled(prefs.isReadOnly(NXQL)));
     	model.put(NXQL,prefs.getValue(NXQL, null));
+    	
+    	model.put(NUXEO_MAX_PAGE_SIZE + "_readOnly", isDisabledFiled(prefs.isReadOnly(NUXEO_MAX_PAGE_SIZE)));
     	model.put(NUXEO_MAX_PAGE_SIZE,prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
+    	
+    	model.put(NUXEO_COLUMNS + "_readOnly", isDisabledFiled(prefs.isReadOnly(NUXEO_COLUMNS)));
     	model.put(NUXEO_COLUMNS,prefs.getValue(NUXEO_COLUMNS, null));
     	
     	return new ModelAndView(viewSelector.getViewName(request, "edit"), model);
+    }
+    
+    private String isDisabledFiled(boolean flag){
+    	if(flag)
+    		return "disabled";
+    	else
+    		return "";
     }
     
     
@@ -75,10 +88,16 @@ public class EditController extends AbastractBaseController{
 			prefs.store();
 			makeNuxeoSession(request, nuxeoResource);
     	}
+		if(!prefs.isReadOnly(NXQL)){
+			prefs.setValue(NXQL, request.getParameter(NXQL));
+		}
+		if(!prefs.isReadOnly(NUXEO_MAX_PAGE_SIZE)){
+			prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE));
+		}
+		if(!prefs.isReadOnly(NUXEO_COLUMNS)){
+			prefs.setValue(NUXEO_COLUMNS, request.getParameter(NUXEO_COLUMNS));
+		}
 		
-		prefs.setValue(NXQL, request.getParameter(NXQL));
-		prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE));
-		prefs.setValue(NUXEO_COLUMNS, request.getParameter(NUXEO_COLUMNS));
 		prefs.store();
 		
 		makeColumns(request, nuxeoResource);
