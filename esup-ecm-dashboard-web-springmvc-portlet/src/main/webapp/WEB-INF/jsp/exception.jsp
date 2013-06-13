@@ -8,12 +8,14 @@
 
 <div class="portlet-section">
     <p class="text-error">
+        <spring:message code="preferences.incorrect"/><br/>
         <spring:message code="exception.contact.admin"/>
     </p>  
 	<span class="exceptionMessage">
 		<spring:message code="exception.details"/> : ${exceptionMessage}
 	</span>
-<%--     <p class="text-error">
+<%--     
+    <p class="text-error">
         <a href="${editPreferencesUrl}"><spring:message code="preferences.form.page"/></a>
     </p> --%>           
 </div>
