@@ -4,7 +4,7 @@
     <parent>
         <artifactId>esup-ecm-dashboard</artifactId>
         <groupId>org.esupportail</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>esup-ecm-dashboard-domain-beans</artifactId>
     <description>The business object</description>
