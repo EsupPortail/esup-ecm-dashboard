@@ -57,21 +57,58 @@ public abstract class AbastractBaseController implements MessageSourceAware{
 		this.messageSource = messageSource;
 	}
 	
-	@ExceptionHandler({Exception.class})
+	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception ex) {
-		
-		logger.error("Exception catching in spring mvc controller ... ", ex);
-		
+		logger.error("Exception catching in spring mvc controller ... ", ex);		
 		ModelMap model = new ModelMap();
-		
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
     	PrintStream print = new PrintStream(output);
     	ex.printStackTrace(print);
-    	//String exceptionStackTrace = new String(output.toByteArray());
-    	//model.put("exceptionStackTrace", exceptionStackTrace);
-    	model.put("exceptionMessage", ex.getMessage());
+    	String exceptionStackTrace = new String(output.toByteArray());
     	
+    	String errMsg1 = getErrorMessage(exceptionStackTrace);
+    	String errMsg2 = getCausedByMessage(exceptionStackTrace);
+        if(!errMsg1.equals("") || !errMsg2.equals("")){
+        	model.put("exceptionMessage", errMsg1 + errMsg2);
+        }else{
+        	model.put("exceptionMessage",ex.getMessage());
+        }
         return new ModelAndView("exception", model);
+	}
+	
+	private String getErrorMessage(String errMsg){
+		String exceptionMessage = errMsg;
+		int indexOfRemoteMessage = exceptionMessage.indexOf("Remote Stack Trace:");
+    	if(indexOfRemoteMessage > 1){
+    		exceptionMessage = exceptionMessage.substring(indexOfRemoteMessage  + 20);
+    		
+    		int endIndex = exceptionMessage.indexOf("\n");
+    		exceptionMessage = exceptionMessage.substring(0, endIndex);
+    		return "<br/>" + exceptionMessage ;
+    	}
+    	return "";
+	}
+	
+	
+	private String getCausedByMessage(String errMsg){
+		String exceptionMessage = errMsg;
+		int indexOfCausedBy = exceptionMessage.indexOf("Caused by:");
+    	if(indexOfCausedBy > 1){
+    		exceptionMessage = exceptionMessage.substring(indexOfCausedBy  + 11);
+    		int lineIndex = exceptionMessage.indexOf("\n");
+    		exceptionMessage = exceptionMessage.substring(0, lineIndex);
+    		
+    		int doubleColoneIndex = exceptionMessage.indexOf(":") + 1;
+    		if(doubleColoneIndex > 0){
+    			
+    			String className = exceptionMessage.substring(0, doubleColoneIndex - 1);
+    			className = className.substring(className.lastIndexOf(".") +1);
+    			exceptionMessage = "[" + className + "] " + exceptionMessage.substring(doubleColoneIndex + 1);
+    			
+    		}
+    		return "<br/>" + exceptionMessage;
+    	}
+    	return "";
 	}
 	
 	protected NuxeoResource getNuxeoResourceFromPortletSession(PortletRequest request){
@@ -88,9 +125,7 @@ public abstract class AbastractBaseController implements MessageSourceAware{
 	
     protected void makeColumns(PortletRequest request,NuxeoResource nuxeoResource) throws Exception{
     	PortletPreferences prefs = request.getPreferences();
-    	if(prefs.getValue(NUXEO_COLUMNS, "").contains("[") && prefs.getValue(NUXEO_COLUMNS, "").contains("]")){
-			nuxeoResource.setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
-		}
+    	nuxeoResource.setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
     }
 
 	
