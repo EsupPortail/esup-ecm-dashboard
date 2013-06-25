@@ -4,7 +4,7 @@
     <parent>
         <artifactId>esup-ecm-dashboard</artifactId>
         <groupId>org.esupportail</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
     <repositories>
         <repository>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-ecm-dashboard-domain-beans</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.4-SNAPSHOT</version>
         </dependency>
         <!-- Jackson JSON Mapper -->
         <dependency>
