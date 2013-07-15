@@ -82,10 +82,10 @@ public class ViewController extends AbastractBaseController {
 	private boolean checkPerferences(PortletPreferences prefs){
 		String nuxeoHost = prefs.getValue(NUXEO_HOST, "");
 		String nxql = prefs.getValue(NXQL, "");
-		String columns = prefs.getValue(NUXEO_COLUMNS, "");
-		if(!nuxeoHost.startsWith("http://"))
+		String[] columns = prefs.getValues(NUXEO_COLUMNS, null);
+		if(!(nuxeoHost.startsWith("http://") || nuxeoHost.startsWith("https://")))
 			return false;
-		if(!(columns.startsWith("[") && columns.endsWith("]")))
+		if(columns == null)
 			return false;
 		if(!(nxql.toLowerCase().startsWith("select")))
 			return false;

@@ -125,7 +125,7 @@ public abstract class AbastractBaseController implements MessageSourceAware{
 	
     protected void makeColumns(PortletRequest request,NuxeoResource nuxeoResource) throws Exception{
     	PortletPreferences prefs = request.getPreferences();
-    	nuxeoResource.setColumns(prefs.getValue(NUXEO_COLUMNS, ""));
+    	nuxeoResource.setColumns(prefs.getValues(NUXEO_COLUMNS, null));
     }
 
 	

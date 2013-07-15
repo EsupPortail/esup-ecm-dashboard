@@ -50,10 +50,12 @@
                 <name>maxPageSize</name>
                 <value>20</value>
             </preference>
-            <!-- Liste des colonnes au format JSON -->
+            <!-- Liste des colonnes -->
             <preference>
                 <name>columns</name>
-                <value>["dc:title", "dc:modified", "dc:creator", "dc:description"]</value>
+                <value>dc:title</value>
+                <value>dc:modified</value>
+                <value>dc:creator</value>
             </preference>
         </portlet-preferences>
 

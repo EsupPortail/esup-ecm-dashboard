@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
-<form name="editForm" method="post" action="${editPreperencesUrl}" >
+<form name="editForm" id="editForm1" method="post" action="${editPreperencesUrl}" >
 
     <table style="width: 100%">
       <tr>
@@ -34,9 +34,19 @@
       </c:if>
       <c:if test="${not columns_readOnly}">
       <tr>
-        <td><label>columns</label></td>
-        <td><input type="text" name="columns" value='${columns}' class="input-xxlarge" style="width: 533px" required />
-            <p class="text-info"><small>ex:)["dc:title", "dc:modified", "dc:creator", "dc:description"]</small></p>
+        <td><label>columns</label>
+        	<br/><button class="btn btn-mini btn-primary" type="button" onclick="javascript:add()"><spring:message code="button.add" /></button>
+        </td>
+        <td>
+        <span id="preferences">
+        <c:forEach items="${columns}" var="column" varStatus="row">
+        	<input type="text" name="columns" class="input-xxlarge" value='${column}' id="prefernceInput${row.index}"/>
+        	<button class="btn btn-mini btn-primary" type="button" 
+        		onclick="javascript:removePref('${row.index}')" id="prefernceButton${row.index}">
+        		<spring:message code="button.remove" /></button><br/>
+        </c:forEach>
+        </span>
+        <p class="text-info"><small>ex:) dc:title, dc:modified, dc:creator, dc:description</small></p>
         </td>
       </tr>
       <tr>
@@ -49,4 +59,43 @@
 <script>
     var val = '${maxPageSize}';
     $("#maxPageSize").val(val);
+    
+    var index = ${fn:length(columns)};
+    
+    function add() {
+    	
+    	var preferences = document.getElementById("preferences");
+    	var removeMsg = '<spring:message code="button.remove" />';
+    	 
+        //Create an input type dynamically.
+        var inputE = document.createElement("input");     
+        //Assign different attributes to the element.
+        inputE.setAttribute("id", "prefernceInput"+index);
+        inputE.setAttribute("type", "text");
+        inputE.setAttribute("name", "columns");
+        inputE.setAttribute("class", "input-xxlarge");
+        
+        var buttonE = document.createElement("button");
+        buttonE.setAttribute("id", "prefernceButton"+index);
+        buttonE.setAttribute("class", "btn btn-mini btn-primary");
+        buttonE.setAttribute("type", "button");
+        buttonE.setAttribute("onclick", "javascript:removePref('"+index+"')");
+        buttonE.appendChild(document.createTextNode(removeMsg));
+     
+        //Append the element in page (in span).
+        preferences.appendChild(inputE);
+        preferences.appendChild(buttonE);
+        
+        index++;
+    }
+    
+    function removePref(i){
+    	var preferences = document.getElementById("preferences");
+    	var prefernceInput = document.getElementById("prefernceInput"+i);
+    	var prefernceButton = document.getElementById("prefernceButton"+i);
+    	
+    	preferences.removeChild(prefernceInput);
+    	preferences.removeChild(prefernceButton);
+    }
+    
 </script>

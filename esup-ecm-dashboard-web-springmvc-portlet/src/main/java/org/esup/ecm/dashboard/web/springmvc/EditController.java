@@ -1,5 +1,8 @@
 package org.esup.ecm.dashboard.web.springmvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletMode;
@@ -50,7 +53,7 @@ public class EditController extends AbastractBaseController{
     	model.put(NUXEO_MAX_PAGE_SIZE,prefs.getValue(NUXEO_MAX_PAGE_SIZE, null));
     	
     	model.put(NUXEO_COLUMNS + "_readOnly", prefs.isReadOnly(NUXEO_COLUMNS));
-    	model.put(NUXEO_COLUMNS,prefs.getValue(NUXEO_COLUMNS, null));
+    	model.put(NUXEO_COLUMNS,prefs.getValues(NUXEO_COLUMNS, null));
     	
     	return new ModelAndView(viewSelector.getViewName(request, "edit"), model);
     }
@@ -65,6 +68,8 @@ public class EditController extends AbastractBaseController{
      */
     @ActionMapping(params="action=edit")
 	public void editPreferences(ActionRequest request, ActionResponse response) throws Exception {
+    	
+    	
     	
 		PortletPreferences prefs = request.getPreferences();
 		
@@ -81,7 +86,15 @@ public class EditController extends AbastractBaseController{
 			prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE));
 		}
 		if(!prefs.isReadOnly(NUXEO_COLUMNS)){
-			prefs.setValue(NUXEO_COLUMNS, request.getParameter(NUXEO_COLUMNS));
+			String[] columns = request.getParameterValues(NUXEO_COLUMNS);
+			List<String> cols = new ArrayList<String> ();
+			for(String column : columns){
+				if(!(column == null || column.equals(""))){
+					cols.add(column);
+				}
+			}
+			columns = cols.toArray(new String[cols.size()]);
+			prefs.setValues(NUXEO_COLUMNS, columns);
 		}
 		
 		prefs.store();
