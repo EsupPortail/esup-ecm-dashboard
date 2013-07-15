@@ -14,7 +14,7 @@ Nuxeo dashboard elements integrated into the portal as a portlet based on esup-c
 + nuxeoPortalAuthSecret(Secret used by Nuxeo [portal-sso](http://www.esup-portail.org/pages/viewpage.action?pageId=201097232) authentication layer) : No editable, ex:) ITJDrjUWLGZ1fNSil795
 + NXQL(Order NXQL spent Nuxeo) : editable, ex:) SELECT * FROM Document WHERE ecm:path STARTSWITH '/testfolder1/'
 + maxPageSize (Max number of entries per page) : editable, ex:) 20
-+ columns (Column list in JSON format) : editable, ex:) ["dc:title", "dc:description", "dc:modified"]
++ columns (Column list) : editable, ex:) dc:title, dc:description, dc:modified ...
 
 ============
 "Editable" is useful uniquely if uPortal administrator add edit capability to the portlet.
