@@ -90,7 +90,7 @@ public class EditController extends AbastractBaseController{
 			List<String> cols = new ArrayList<String> ();
 			for(String column : columns){
 				if(!(column == null || column.equals(""))){
-					cols.add(column);
+					cols.add(column.trim());
 				}
 			}
 			columns = cols.toArray(new String[cols.size()]);
