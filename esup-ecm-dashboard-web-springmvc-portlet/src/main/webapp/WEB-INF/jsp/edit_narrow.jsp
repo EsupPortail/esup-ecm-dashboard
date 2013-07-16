@@ -40,13 +40,14 @@
         <td>
         <span id="preferences">
         <c:forEach items="${columns}" var="column" varStatus="row">
-        	<input type="text" name="columns" class="input-xxlarge" value='${column}' id="prefernceInput${row.index}"/>
+        	<input type="text" name="columns" class="input-xxlarge" value='${column}' id="prefernceInput${row.index}" />
         	<button class="btn btn-mini btn-primary" type="button" 
         		onclick="javascript:removePref('${row.index}')" id="prefernceButton${row.index}">
-        		<spring:message code="button.remove" /></button><br/>
+        		<spring:message code="button.remove" /></button><br id="prefernceBR${row.index}"/>
         </c:forEach>
         </span>
-        <p class="text-info"><small>ex:) dc:title, dc:modified, dc:creator, dc:description</small></p>
+        <p class="text-info"><small>ex:)dc:title, dc:modified, dc:creator, dc:description </small>
+        (Cf. <a href="javascript:open_in_new_tab()">dublincore.xsd</a>) </p>
         </td>
       </tr>
       <tr>
@@ -81,10 +82,14 @@
         buttonE.setAttribute("type", "button");
         buttonE.setAttribute("onclick", "javascript:removePref('"+index+"')");
         buttonE.appendChild(document.createTextNode(removeMsg));
+        
+        var brE = document.createElement("br");
+        brE.setAttribute("id", "prefernceBR"+index);
      
         //Append the element in page (in span).
         preferences.appendChild(inputE);
         preferences.appendChild(buttonE);
+        preferences.appendChild(brE);
         
         index++;
     }
@@ -93,9 +98,16 @@
     	var preferences = document.getElementById("preferences");
     	var prefernceInput = document.getElementById("prefernceInput"+i);
     	var prefernceButton = document.getElementById("prefernceButton"+i);
+    	var prefernceBR = document.getElementById("prefernceBR"+i);
     	
     	preferences.removeChild(prefernceInput);
     	preferences.removeChild(prefernceButton);
+    	preferences.removeChild(prefernceBR);
     }
     
+	function open_in_new_tab(id) {
+		var url = "https://github.com/nuxeo/nuxeo-core/blob/master/nuxeo-core/src/main/resources/schema/dublincore.xsd";
+		var win = window.open(url, '_blank');
+		win.focus(); 
+	}
 </script>
