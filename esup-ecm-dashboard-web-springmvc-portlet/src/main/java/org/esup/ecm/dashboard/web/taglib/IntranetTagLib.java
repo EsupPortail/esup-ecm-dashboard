@@ -11,7 +11,8 @@ public class IntranetTagLib {
 	private static final String dateColumns = "modified:created:issued:valid:expired";
 	
 	public static String getValue(PropertyMap map, String key){
-		return map.getString(key);
+		String value = map.getString(key);
+		return (value == null || value.equals("null")) ? "" : value;
 	}
 	
 	public static String getLastModifiedDate(PropertyMap map){
@@ -24,15 +25,11 @@ public class IntranetTagLib {
 	}
 	
 	public static String getDublinCoreProperty(PropertyMap map, String name){
-		
 		if(dateColumns.contains(name)){
 			Date d = DateParser.parseDate(map.getString("dc:"+name));
 			return sdf.format(d);
 		}
 		String rtnValue = map.getString("dc:"+name);
-		if(rtnValue == null || rtnValue.equals("null"))
-			return "";
-		
-		return rtnValue;
+		return (rtnValue == null || rtnValue.equals("null")) ? "" : rtnValue;
 	}
 }
