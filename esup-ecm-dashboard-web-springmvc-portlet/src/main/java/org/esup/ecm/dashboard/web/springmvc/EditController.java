@@ -68,22 +68,18 @@ public class EditController extends AbastractBaseController{
      */
     @ActionMapping(params="action=edit")
 	public void editPreferences(ActionRequest request, ActionResponse response) throws Exception {
-    	
-    	
-    	
 		PortletPreferences prefs = request.getPreferences();
-		
 		NuxeoResource nuxeoResource = getNuxeoResourceFromPortletSession(request);
 		if(!prefs.isReadOnly(NUXEO_HOST)){
-			prefs.setValue(NUXEO_HOST, request.getParameter(NUXEO_HOST));
+			prefs.setValue(NUXEO_HOST, request.getParameter(NUXEO_HOST).trim());
 			prefs.store();
 			makeNuxeoSession(request, nuxeoResource);
     	}
 		if(!prefs.isReadOnly(NXQL)){
-			prefs.setValue(NXQL, request.getParameter(NXQL));
+			prefs.setValue(NXQL, request.getParameter(NXQL).trim());
 		}
 		if(!prefs.isReadOnly(NUXEO_MAX_PAGE_SIZE)){
-			prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE));
+			prefs.setValue(NUXEO_MAX_PAGE_SIZE, request.getParameter(NUXEO_MAX_PAGE_SIZE).trim());
 		}
 		if(!prefs.isReadOnly(NUXEO_COLUMNS)){
 			String[] columns = request.getParameterValues(NUXEO_COLUMNS);
