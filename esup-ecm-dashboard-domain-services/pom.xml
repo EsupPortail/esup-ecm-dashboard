@@ -4,7 +4,7 @@
     <parent>
         <artifactId>esup-ecm-dashboard</artifactId>
         <groupId>org.esupportail</groupId>
-        <version>1.0.5-SNAPSHOT</version>
+        <version>1.0.5</version>
     </parent>
     <artifactId>esup-ecm-dashboard-domain-services</artifactId>
     <description>Domain Interface and Impl</description>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-ecm-dashboard-dao</artifactId>
-            <version>1.0.5-SNAPSHOT</version>
+            <version>1.0.5</version>
             <type>jar</type>
         </dependency>
         <dependency>
