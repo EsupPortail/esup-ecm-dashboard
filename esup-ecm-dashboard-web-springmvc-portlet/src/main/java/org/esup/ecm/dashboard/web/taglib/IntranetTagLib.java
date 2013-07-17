@@ -8,7 +8,7 @@ import org.nuxeo.ecm.core.schema.utils.DateParser;
 
 public class IntranetTagLib {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
-	private static final String dateColumns = "modified:created:issued:valid:expired";
+	private static final String dateColumns = "dc:modified,dc:created,dc:issued,dc:valid,dc:expired";
 	
 	public static String getValue(PropertyMap map, String key){
 		String value = map.getString(key);
@@ -30,6 +30,15 @@ public class IntranetTagLib {
 			return sdf.format(d);
 		}
 		String rtnValue = map.getString("dc:"+name);
+		return (rtnValue == null || rtnValue.equals("null")) ? "" : rtnValue;
+	}
+	
+	public static String getColumnValue(PropertyMap map, String name){
+		if(dateColumns.contains(name)){
+			Date d = DateParser.parseDate(map.getString(name));
+			return sdf.format(d);
+		}
+		String rtnValue = map.getString(name);
 		return (rtnValue == null || rtnValue.equals("null")) ? "" : rtnValue;
 	}
 }
