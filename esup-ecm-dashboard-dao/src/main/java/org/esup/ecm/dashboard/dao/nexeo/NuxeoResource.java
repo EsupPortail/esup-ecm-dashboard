@@ -33,23 +33,10 @@ public class NuxeoResource {
 	}
 	
 	public void setColumns(String[] colsStr) throws JsonParseException, JsonMappingException, IOException{
-		
-		// set columns from preferences.
-		// Format : JSON
-//		String tmp = "{\"columns\":" + colsStr + "}";
-//		ObjectMapper mapper = new ObjectMapper();
-//		Map<String, Object> userInMap = null;
-//		userInMap = mapper.readValue(tmp, new TypeReference<Map<String, Object>>() {});
-//		@SuppressWarnings("unchecked")
-//		ArrayList<String> cols = (ArrayList<String>) userInMap.get("columns");
-//				
 		columns = new ArrayList<String>();
 		for(String column : colsStr){
-			if(column.contains(":")){
-				String col = column.substring(column.indexOf(":")+1);
-				if(!hasSameColumn(col)){
-					columns.add(col);
-				}
+			if(!hasSameColumn(column)){
+				columns.add(column);
 			}
 		}
 	}

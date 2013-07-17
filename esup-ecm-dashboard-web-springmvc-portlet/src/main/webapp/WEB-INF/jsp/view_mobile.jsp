@@ -3,7 +3,7 @@
     <tr>
     	<th></th>
     	<c:forEach var="column" items="${columns}">
-        	<th><spring:message code="dc.${column}" /></th>
+        	<th><spring:message code="${fn:replace(column, ':', '.')}" text="${column}"/></th>
         </c:forEach>
     </tr>
     <tbody>
@@ -15,11 +15,11 @@
 	            	<c:forEach items="${columns}" var="column" >
 	            	
 	            		<c:choose>
-	                        <c:when test="${column == 'title'}">
+	                        <c:when test="${fn:contains(column,'title')}">
 	                        	<td><a href="${nuxeoHost}/nxdoc/default/${doc.id}/view_documents" rel="external">${doc.title}</a></td>
 	                        </c:when>
 	                        <c:otherwise>
-	                        	<td>${esup:getDublinCoreProperty(doc.properties, column)}</td>
+	                        	<td>${esup:getColumnValue(doc.properties, column)}</td>
 	                        </c:otherwise>
                         </c:choose>
 			        	
@@ -28,6 +28,9 @@
 	        </c:forEach>
         </c:if>
     </tbody>
+    
+
+    
     <tr>
     	<td colspan="5"><%@ include file="/WEB-INF/jsp/pagination.jsp"%></td>
 	</tr>

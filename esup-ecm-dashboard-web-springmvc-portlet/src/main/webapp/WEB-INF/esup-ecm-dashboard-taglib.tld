@@ -49,4 +49,14 @@
             ${getDublinCoreProperty(obj, 'java.lang.String')}
         </example>
     </function>
+    
+    <function>
+        <description> Get Column property </description>
+        <name>getColumnValue</name>
+        <function-class>org.esup.ecm.dashboard.web.taglib.IntranetTagLib</function-class>
+        <function-signature>String getColumnValue(org.nuxeo.ecm.automation.client.model.PropertyMap, java.lang.String)</function-signature>
+        <example>
+            ${getColumnValue(obj, 'java.lang.String')}
+        </example>
+    </function>
 </taglib>

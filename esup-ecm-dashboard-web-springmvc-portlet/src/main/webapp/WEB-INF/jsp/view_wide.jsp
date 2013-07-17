@@ -3,26 +3,16 @@
     <tr>
     	<th></th>
     	<c:forEach var="column" items="${columns}">
-        	<th><spring:message code="dc.${column}" /></th>
+        	<th><spring:message code="${fn:replace(column, ':', '.')}" text="${column}"/></th>
         </c:forEach>
     </tr>
     <tbody>
         <c:if test="${not empty docs}">
-        	
 	        <c:forEach items="${docs}" var="doc" >
-	            <tr>
+	            <tr onclick="javascript:open_in_new_tab('${doc.id}')" style="cursor:pointer;">
 	            	<td width="30"><img src="<%=request.getContextPath()%>/img/${esup:getImgFileName(doc.properties)}" ></td> 
 	            	<c:forEach items="${columns}" var="column" >
-	            	
-	            		<c:choose>
-	                        <c:when test="${column == 'title'}">
-	                        	<td><a href="javascript:open_in_new_tab('${doc.id}')">${doc.title}</a></td>
-	                        </c:when>
-	                        <c:otherwise>
-	                        	<td>${esup:getDublinCoreProperty(doc.properties, column)}</td>
-	                        </c:otherwise>
-                        </c:choose>
-			        	
+	            		<td>${esup:getColumnValue(doc.properties, column)}</td>
 			        </c:forEach>
 	            </tr>
 	        </c:forEach>
