@@ -43,7 +43,7 @@
             <!-- Ordre NXQL passé à Nuxeo -->
             <preference>
                 <name>NXQL</name>
-                <value>SELECT * FROM Document WHERE ecm:path STARTSWITH '/default-domain/workspaces/' ORDER BY dc:modified DESC</value>
+                <value>SELECT * FROM Document WHERE ecm:path STARTSWITH '/default-domain/workspaces/' AND (ecm:mixinType != 'HiddenInNavigation') AND (ecm:currentLifeCycleState != 'deleted') ORDER BY dc:modified DESC</value>
             </preference>
             <!-- Nombre maximun d'entrées par par page -->
             <preference>
